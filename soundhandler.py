@@ -26,13 +26,14 @@ def callback(indata, frames, time, status):
       magnitudeSpec[i] = 0 #suppress mains hum
 
     maxInd = np.argmax(magnitudeSpec)
-    maxFreq = maxInd * (SAMPLE_FREQ/WINDOW_SIZE)
+    maxFreq = int(maxInd * (SAMPLE_FREQ/WINDOW_SIZE))
     closestPitch, closestNote  = getClosestGuitarNote(maxFreq)
+    closestPitch = int(closestPitch)
 
     os.system('cls' if os.name=='nt' else 'clear')
     if closestPitch < maxFreq:
-      print(f"{closestNote}: {closestPitch:.1f} v {maxFreq:.1f}")
+      print(f"{closestNote}: {closestPitch} v {maxFreq}")
     else:
-      print(f"{closestNote}: {closestPitch:.1f} ^ {maxFreq:.1f}")
+      print(f"{closestNote}: {closestPitch} ^ {maxFreq}")
   else:
     print('no input')
